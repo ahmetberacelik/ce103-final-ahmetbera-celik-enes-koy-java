@@ -277,4 +277,223 @@ public class Librarysystem {
 	    take_enter_input();
         return false;
 	    }
+		/**
+	 * @brief Manages the reservation and renewal operations in the library system.
+	 *
+	 * This method presents a menu to the user, allowing them to perform various reservation and renewal operations,
+	 * such as reserving items, restoring items, viewing reservations, or exiting the menu.
+	 *
+	 * @return True if the reservation and renewal operations are successfully completed, false otherwise.
+	 * @throws IOException If an I/O error occurs during user input.
+	 * @throws InterruptedException If the thread is interrupted.
+	 */
+	public boolean reservationAndRenewal() throws IOException, InterruptedException{
+	    boolean isRunning = true;
+	    while (isRunning) {
+	        clearScreen();
+	        out.print("1. Reserve Items\n");
+	        out.print("2. Restore Items\n");
+	        out.print("3. View Reservation\n");
+	        out.print("4. Exit\n");
+	        out.print("Enter your choice (1-4):");
+
+	        if (!scanner.hasNextInt()) {
+	            out.print("Invalid choice. Please enter a number.\n");
+	            take_enter_input();
+	            scanner.next();
+	            continue;
+	        }
+
+	        int choice = scanner.nextInt();
+	        switch (choice) {
+	            case 1:
+	                reserveItems();
+	                break;
+	            case 2:
+	            	restoreItems();
+	                break;
+	            case 3:
+	            	viewReservation();
+	                break;
+	            case 4:
+	                isRunning = false;
+	                break;
+	            default:
+	                out.print("Invalid choice. Please try again.\n");
+	                take_enter_input();
+	                break;
+	        }
+	    }
+	    return true;
+	}
+	/**
+	 * @brief Handles the user login for reservation operations.
+	 *
+	 * This method prompts the user to register with their username. If the entered username is registered,
+	 * it welcomes the user and sets them as the active user.
+	 *
+	 * @return True if the user login is successful, false otherwise.
+	 * @throws IOException If an I/O error occurs during user input.
+	 * @throws InterruptedException If the thread is interrupted.
+	 */
+	boolean reservationScreenLogin() throws IOException, InterruptedException{
+	    clearScreen();
+	    out.print("Please register with your user name.\n");
+	    out.print("Write your user name:\n");
+	    scanner.nextLine(); 
+	    String temporary_username = scanner.nextLine();
+	    for (String registeredUserName : registered_user_name) {
+	        if (registeredUserName.equals(temporary_username)) {
+	            out.print("Welcome " + registeredUserName + "\n");
+	            active_user = registeredUserName;
+	            take_enter_input();
+	            return true;
+	        }
+	    }
+	    out.print("The username you entered is not registered. Please check your entry.\n");
+	    take_enter_input();
+	    return false;
+	}
+	/**
+	 * @brief Manages the reservation operations for different types of items (books, movies, music).
+	 *
+	 * This method presents a menu to the user, allowing them to reserve different types of items,
+	 * such as books, movies, or music. It handles the specific reservation logic based on the user's choice.
+	 *
+	 * @return True if the reservation operations are successfully completed, false otherwise.
+	 * @throws IOException If an I/O error occurs during user input.
+	 * @throws InterruptedException If the thread is interrupted.
+	 */
+	public boolean reserveItems() throws IOException, InterruptedException{
+	    boolean isRunning = true;
+	    while (isRunning) {
+	        clearScreen();
+	        out.print("1. Reserve Books\n");
+	        out.print("2. Reserve Movies\n");
+	        out.print("3. Reserve Music\n");
+	        out.print("4. Exit\n");
+	        out.print("Enter your choice (1-4):");
+
+	        if (!scanner.hasNextInt()) {
+	            out.print("Invalid choice. Please enter a number.\n");
+	            take_enter_input();
+	            scanner.next();
+	            continue;
+	        }
+
+	        int choice = scanner.nextInt();
+	        switch (choice) {
+	            case 1:
+	                reserveBook();
+	                break;
+	            case 2:
+	            	reserveMovie();
+	                break;
+	            case 3:
+	                reserveMusic();
+	                break;
+	            case 4:
+	                isRunning = false;
+	                break;
+	            default:
+	                out.print("Invalid choice. Please try again.\n");
+	                take_enter_input();
+	                break;
+	        }
+	    }
+	    return true;
+	}
+	/**
+	 * @brief Reserves a book for the active user.
+	 *
+	 * This method prompts the user to enter the name of the book they want to reserve, and if the book is available,
+	 * it reserves the book for the active user. The reserved book is added to the list of reserved items, and its availability
+	 * in the catalog is updated.
+	 *
+	 * @return True if the book is successfully reserved, false otherwise.
+	 * @throws IOException If an I/O error occurs during user input.
+	 * @throws InterruptedException If the thread is interrupted.
+	 */
+	public boolean reserveBook() throws IOException, InterruptedException{
+		clearScreen();
+        out.print("Please write book name you want to reserve, please pay attention to upper and lower case letters.\n");
+        out.print("(A correct example: Crime and Punishment):\n");
+        scanner.nextLine();
+        String bookQuery = scanner.nextLine();
+        for (int i = 0; i < books.length; i++) {
+            if (books[i].equals(bookQuery)) {
+                reservedItems[reservedItemCount++] = books[i] + " is reserved by " + active_user;
+                out.print("The book " + books[i] + " is available.\n");
+                out.print(books[i] + " is reserved by " + active_user + "\n");
+                books[i] = "";
+                take_enter_input();
+                return true;
+            }
+        }
+        out.print("Sorry, the book is not available.\n");
+        take_enter_input();
+        return false;
+    }
+	/**
+	 * @brief Reserves a movie for the active user.
+	 *
+	 * This method prompts the user to enter the name of the movie they want to reserve, and if the movie is available,
+	 * it reserves the movie for the active user. The reserved movie is added to the list of reserved items, and its availability
+	 * in the catalog is updated.
+	 *
+	 * @return True if the movie is successfully reserved, false otherwise.
+	 * @throws IOException If an I/O error occurs during user input.
+	 * @throws InterruptedException If the thread is interrupted.
+	 */
+	public boolean reserveMovie() throws IOException, InterruptedException{
+		clearScreen();
+	    out.print("Please write movie name you want to reserve, please pay attention to upper and lower case letters.\n");
+	    out.print("(A correct example: Into the Wild):\n");
+	    scanner.nextLine();
+	    String movieQuery = scanner.nextLine();
+	    for (int i = 0; i < movies.length; i++) {
+            if (movies[i].equals(movieQuery)) {
+                reservedItems[reservedItemCount++] = movies[i] + " is reserved by " + active_user;
+                out.print("The movie " + movies[i] + " is available.\n");
+                out.print(movies[i] + " is reserved by " + active_user + "\n");
+                movies[i] = "";
+                take_enter_input();
+                return true;
+            }
+        }
+	    out.print("Sorry, the movie is not available.\n");
+	    take_enter_input();
+	    return false;
+	}
+	/**
+	 * @brief Reserves a music for the active user.
+	 *
+	 * This method prompts the user to enter the name of the music they want to reserve, and if the music is available,
+	 * it reserves the music for the active user. The reserved music is added to the list of reserved items, and its availability
+	 * in the catalog is updated.
+	 *
+	 * @return True if the music is successfully reserved, false otherwise.
+	 * @throws IOException If an I/O error occurs during user input.
+	 * @throws InterruptedException If the thread is interrupted.
+	 */
+	public boolean reserveMusic() throws IOException, InterruptedException{
+		clearScreen();
+	    out.print("Please write music name you want to reserve, please pay attention to upper and lower case letters.\n");
+	    out.print("(A correct example: Castle of Glass):\n");
+	    scanner.nextLine();
+	    String musicQuery = scanner.nextLine();
+	    for (int i = 0; i < musics.length; i++) {
+            if (musics[i].equals(musicQuery)) {
+                reservedItems[reservedItemCount++] = musics[i] + " is reserved by " + active_user;
+                out.print("The music " + musics[i] + " is available.\n");
+                out.print(musics[i] + " is reserved by " + active_user + "\n");
+                musics[i] = "";
+                take_enter_input();
+                return true;
+            }
+        }
+	    out.print("Sorry, the music is not available.\n");
+	    take_enter_input();
+	    return false;
+	}
 }
