@@ -690,4 +690,26 @@ public class Librarysystem {
         out.print(lib_infos);
         take_enter_input();
     }
+	/**
+     * @brief Write library system data to a binary file.
+     *
+     * This function writes the current state of the library system data to a binary file.
+     *
+     * @param filename The name of the file to write the data.
+     * @throws IOException if an I/O error occurs.
+     */
+    public void writeBinary(String filename) throws IOException {
+        try (FileOutputStream fileOut = new FileOutputStream(filename);
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+        	out.writeObject(reservedItems);
+        	out.writeObject(reservedItemCount);
+        	out.writeObject(books);
+        	out.writeObject(movies);
+        	out.writeObject(musics);
+        	out.writeObject(registered_user_name);
+        	out.writeObject(active_user);
+        	out.writeObject(events);
+        	out.writeObject(lib_infos);            
+        }
+    }
 }
