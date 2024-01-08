@@ -451,4 +451,160 @@ public class LibrarysystemTest {
         System.setIn(null);
         System.setOut(null);
     }
+	@Test
+    public void restoreItemsValid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("\nUncle Vanya\n\nDelete\n\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.reserveBook();
+        Assert.assertTrue(result);
+        boolean result2 = librarysystem.restoreItems();
+        Assert.assertTrue(result2);
+        String expectedOutput = "Please write book name you want to reserve, please pay attention to upper and lower case letters.\n" +
+        	    "(A correct example: Crime and Punishment):\n" +
+        	    "The book Uncle Vanya is available.\n" +
+        	    "Uncle Vanya is reserved by Example User\n" +
+        	    "The item Uncle Vanya is reserved by Example User.\n" +
+        	    "If you want to delete your all reservations, write 'Delete'. If you didn't, enter wrong input.\n" +
+        	    "Your reservations has been cleaned.\n";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void restoreItemsInvalid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("\nUncle Vanya\n\nInvalid Input\n\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.reserveBook();
+        Assert.assertTrue(result);
+        boolean result2 = librarysystem.restoreItems();
+        Assert.assertFalse(result2);
+        String expectedOutput = "Please write book name you want to reserve, please pay attention to upper and lower case letters.\n" +
+        	    "(A correct example: Crime and Punishment):\n" +
+        	    "The book Uncle Vanya is available.\n" +
+        	    "Uncle Vanya is reserved by Example User\n" +
+        	    "The item Uncle Vanya is reserved by Example User.\n" +
+        	    "If you want to delete your all reservations, write 'Delete'. If you didn't, enter wrong input.\n" +
+        	    "You entered wrong input!\n";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void EventMenuInvalid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("abc\n\n48\n\n3\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.EventAndWorkshopSchedule();
+        Assert.assertTrue(result);
+        String expectedOutput = "1. View Events\n" +
+        		"2. Register for Events\n" +
+        		"3. Exit\n" +
+        		"Enter your choice (1-3):" +
+                "Invalid choice. Please enter a number.\n" +
+                "1. View Events\n" +
+        		"2. Register for Events\n" +
+        		"3. Exit\n" +
+        		"Enter your choice (1-3):" +
+                "Invalid choice. Please try again.\n" +
+                "1. View Events\n" +
+        		"2. Register for Events\n" +
+        		"3. Exit\n" +
+        		"Enter your choice (1-3):";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void EventMenuValid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("1\n\n2\n123\n\n3\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.EventAndWorkshopSchedule();
+        Assert.assertTrue(result);
+        String expectedOutput = "1. View Events\n" +
+        		"2. Register for Events\n" +
+        		"3. Exit\n" +
+        		"Enter your choice (1-3):" +
+        		"Upcoming Library Events\n" +
+        		"1 - Reading incentive program for children (Two days later, 5 p.m)\n" +
+        		"2 - Book chat with the author (Five days later, 10 a.m)\n" +
+                "1. View Events\n" +
+        		"2. Register for Events\n" +
+        		"3. Exit\n" +
+        		"Enter your choice (1-3):" +
+        		"Upcoming Library Events\n" +
+        		"1 - Reading incentive program for children (Two days later, 5 p.m)\n" +
+        		"2 - Book chat with the author (Five days later, 10 a.m)\n" +
+        		"Please enter your name:\n" +
+        		"You entered an invalid username. Username must consist of letters.\n" +
+                "1. View Events\n" +
+        		"2. Register for Events\n" +
+        		"3. Exit\n" +
+        		"Enter your choice (1-3):";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void registerForEventsValid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("\nExample User\n1\n\n".getBytes());
+        System.setIn(inContent);
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.registerForEvents();
+        Assert.assertTrue(result);
+        String expectedOutput = "Upcoming Library Events\n" +
+        		"1 - Reading incentive program for children (Two days later, 5 p.m)\n" +
+        		"2 - Book chat with the author (Five days later, 10 a.m)\n" +
+        		"Please enter your name:\n" +
+        		"Please select the event you want to register:\n" +
+        		"A reservation has been made for Example User for the event 1. " +
+                "Simply stating your name at the entrance will be sufficient.\n";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void registerForEventsInvalid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("\nExample User\nletter\n\n".getBytes());
+        System.setIn(inContent);
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.registerForEvents();
+        Assert.assertFalse(result);
+        String expectedOutput = "Upcoming Library Events\n" +
+        		"1 - Reading incentive program for children (Two days later, 5 p.m)\n" +
+        		"2 - Book chat with the author (Five days later, 10 a.m)\n" +
+        		"Please enter your name:\n" +
+        		"Please select the event you want to register:\n" +
+        		"You entered wrong option number. Please try again...\n";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void eventNoCheckValid() {
+    	boolean result = Librarysystem.eventNoCheck("1");
+        Assert.assertTrue(result);
+        boolean result2 = Librarysystem.eventNoCheck("2");
+        Assert.assertTrue(result2);
+    }
+    
+    @Test
+    public void eventNoCheckInvalid() {
+    	boolean result = Librarysystem.eventNoCheck("9");
+        Assert.assertFalse(result);
+        boolean result2 = Librarysystem.eventNoCheck("-5");
+        Assert.assertFalse(result2);
+    }
 }
