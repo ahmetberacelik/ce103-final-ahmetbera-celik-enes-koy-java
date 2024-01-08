@@ -242,3 +242,213 @@ public class LibrarysystemTest {
         System.setIn(null);
         System.setOut(null);
     }
+    
+    @Test
+    public void testReservationAndRenewalInvalid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("abc\n\n48\n\n4\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.reservationAndRenewal();
+        Assert.assertTrue(result);
+        String expectedOutput = "1. Reserve Items\n" +
+        		"2. Restore Items\n" +
+        		"3. View Reservation\n" +
+        		"4. Exit\n" +
+        		"Enter your choice (1-4):" +
+                "Invalid choice. Please enter a number.\n" +
+                "1. Reserve Items\n" +
+        		"2. Restore Items\n" +
+        		"3. View Reservation\n" +
+        		"4. Exit\n" +
+        		"Enter your choice (1-4):" +
+                "Invalid choice. Please try again.\n" +
+                "1. Reserve Items\n" +
+        		"2. Restore Items\n" +
+        		"3. View Reservation\n" +
+        		"4. Exit\n" +
+        		"Enter your choice (1-4):";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void testReservationAndRenewalValid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("1\n4\n2\n\n3\n\n4\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.reservationAndRenewal();
+        Assert.assertTrue(result);
+        String expectedOutput = "1. Reserve Items\n" +
+        		"2. Restore Items\n" +
+        		"3. View Reservation\n" +
+        		"4. Exit\n" +
+        		"Enter your choice (1-4):" +
+        		"1. Reserve Books\n" +
+    	        "2. Reserve Movies\n" +
+    	        "3. Reserve Music\n" +
+    	        "4. Exit\n" +
+    	        "Enter your choice (1-4):" +
+                "1. Reserve Items\n" +
+        		"2. Restore Items\n" +
+        		"3. View Reservation\n" +
+        		"4. Exit\n" +
+        		"Enter your choice (1-4):" +
+        		"You have no borrowed material.\n" +
+                "1. Reserve Items\n" +
+        		"2. Restore Items\n" +
+        		"3. View Reservation\n" +
+        		"4. Exit\n" +
+        		"Enter your choice (1-4):" +
+        		"You have no borrowed material.\n" +
+        		"1. Reserve Items\n" +
+        		"2. Restore Items\n" +
+        		"3. View Reservation\n" +
+        		"4. Exit\n" +
+        		"Enter your choice (1-4):";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void reservationScreenLoginInvalid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("Invalid User\n\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.reservationScreenLogin();
+        Assert.assertFalse(result);
+        String expectedOutput = "Please register with your user name.\n" +
+        		"Write your user name:\n" + 
+        		"The username you entered is not registered. Please check your entry.\n";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void reserveItemsTest() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("1\n\n\n2\n\n\n3\n\n\n4\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.reserveItems();
+        Assert.assertTrue(result);
+        String expectedOutput = "1. Reserve Books\n" +
+    	        "2. Reserve Movies\n" +
+    	        "3. Reserve Music\n" +
+    	        "4. Exit\n" +
+    	        "Enter your choice (1-4):" +
+    	        "Please write book name you want to reserve, please pay attention to upper and lower case letters.\n" +
+        	    "(A correct example: Crime and Punishment):\n" +
+        	    "Sorry, the book is not available.\n" +
+        	    "1. Reserve Books\n" +
+    	        "2. Reserve Movies\n" +
+    	        "3. Reserve Music\n" +
+    	        "4. Exit\n" +
+    	        "Enter your choice (1-4):" +
+        	    "Please write movie name you want to reserve, please pay attention to upper and lower case letters.\n" +
+        	    "(A correct example: Into the Wild):\n" + 
+        	    "Sorry, the movie is not available.\n" +
+        	    "1. Reserve Books\n" +
+    	        "2. Reserve Movies\n" +
+    	        "3. Reserve Music\n" +
+    	        "4. Exit\n" +
+    	        "Enter your choice (1-4):" +
+        	    "Please write music name you want to reserve, please pay attention to upper and lower case letters.\n" +
+        	    "(A correct example: Castle of Glass):\n" +
+        	    "Sorry, the music is not available.\n" +
+        	    "1. Reserve Books\n" +
+    	        "2. Reserve Movies\n" +
+    	        "3. Reserve Music\n" +
+    	        "4. Exit\n" +
+    	        "Enter your choice (1-4):";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void reserveItemsInvalid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("abc\n\n48\n\n4\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.reserveItems();
+        Assert.assertTrue(result);
+        String expectedOutput = "1. Reserve Books\n" +
+    	        "2. Reserve Movies\n" +
+    	        "3. Reserve Music\n" +
+    	        "4. Exit\n" +
+    	        "Enter your choice (1-4):" +
+                "Invalid choice. Please enter a number.\n" +
+                "1. Reserve Books\n" +
+    	        "2. Reserve Movies\n" +
+    	        "3. Reserve Music\n" +
+    	        "4. Exit\n" +
+    	        "Enter your choice (1-4):" +
+                "Invalid choice. Please try again.\n" +
+                "1. Reserve Books\n" +
+    	        "2. Reserve Movies\n" +
+    	        "3. Reserve Music\n" +
+    	        "4. Exit\n" +
+    	        "Enter your choice (1-4):";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void reserveBooksValid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("\nUncle Vanya\n\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.reserveBook();
+        Assert.assertTrue(result);
+        String expectedOutput = "Please write book name you want to reserve, please pay attention to upper and lower case letters.\n" +
+        	    "(A correct example: Crime and Punishment):\n" +
+        	    "The book Uncle Vanya is available.\n" +
+        	    "Uncle Vanya is reserved by Example User\n";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void reserveMovieValid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("\nInto the Wild\n\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.reserveMovie();
+        Assert.assertTrue(result);
+        String expectedOutput = "Please write movie name you want to reserve, please pay attention to upper and lower case letters.\n" +
+        	    "(A correct example: Into the Wild):\n" +
+        	    "The movie Into the Wild is available.\n" +
+        	    "Into the Wild is reserved by Example User\n";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void reserveMusicValid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("\nMockingbird\n\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.reserveMusic();
+        Assert.assertTrue(result);
+        String expectedOutput = "Please write music name you want to reserve, please pay attention to upper and lower case letters.\n" +
+        	    "(A correct example: Castle of Glass):\n" +
+        	    "The music Mockingbird is available.\n" +
+        	    "Mockingbird is reserved by Example User\n";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+}
