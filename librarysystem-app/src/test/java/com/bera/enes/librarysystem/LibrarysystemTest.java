@@ -1,4 +1,4 @@
-package com.bera.enes.librarysystem;
+package com.bera.librarysystem;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,5 +24,221 @@ public class LibrarysystemTest {
         System.setIn(null);
     }
     
+    @Test
+    public void testMainMenuInvalid() throws IOException, InterruptedException {
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("abc\n\n48\n\n5\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.mainMenu();
+        
+        Assert.assertTrue(result);
+        String expectedOutput = "1. Catalog Search\n" +
+                "2. Reservation And Renewal\n" +
+                "3. Event And Workshop Schedule\n" +
+                "4. Library Information\n" +
+                "5. Exit\n" +
+                "Enter your choice (1-5):" +
+                "Invalid choice. Please enter a number.\n" +
+                "1. Catalog Search\n" +
+                "2. Reservation And Renewal\n" +
+                "3. Event And Workshop Schedule\n" +
+                "4. Library Information\n" +
+                "5. Exit\n" +
+                "Enter your choice (1-5):" +
+                "Invalid choice. Please try again.\n" +
+                "1. Catalog Search\n" +
+                "2. Reservation And Renewal\n" +
+                "3. Event And Workshop Schedule\n" +
+                "4. Library Information\n" +
+                "5. Exit\n" +
+                "Enter your choice (1-5):";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
     
-}
+    @Test
+    public void testMainMenuValid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("1\n4\n2\nEnes Koy\n\n4\n3\n3\n4\n\n5\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.mainMenu();
+        Assert.assertTrue(result);
+        String expectedOutput = "1. Catalog Search\n" +
+                "2. Reservation And Renewal\n" +
+                "3. Event And Workshop Schedule\n" +
+                "4. Library Information\n" +
+                "5. Exit\n" +
+                "Enter your choice (1-5):" +
+                "1. Search Books\n" +
+                "2. Search Movies\n" +
+                "3. Search Music\n" +
+                "4. Exit\n" +
+                "Enter your choice (1-4):" +
+                "1. Catalog Search\n" +
+                "2. Reservation And Renewal\n" +
+                "3. Event And Workshop Schedule\n" +
+                "4. Library Information\n" +
+                "5. Exit\n" +
+                "Enter your choice (1-5):" +
+                "Please register with your user name.\n" +
+        	    "Write your user name:\n" +
+        	    "Welcome Enes Koy\n" +
+        	    "1. Reserve Items\n" +
+    	        "2. Restore Items\n" +
+    	        "3. View Reservation\n" +
+    	        "4. Exit\n" +
+    	        "Enter your choice (1-4):" +
+    	        "1. Catalog Search\n" +
+                "2. Reservation And Renewal\n" +
+                "3. Event And Workshop Schedule\n" +
+                "4. Library Information\n" +
+                "5. Exit\n" +
+                "Enter your choice (1-5):" +
+    	        "1. View Events\n" +
+    	        "2. Register for Events\n" +
+    	        "3. Exit\n" +
+    	        "Enter your choice (1-3):" +
+    	        "1. Catalog Search\n" +
+                "2. Reservation And Renewal\n" +
+                "3. Event And Workshop Schedule\n" +
+                "4. Library Information\n" +
+                "5. Exit\n" +
+                "Enter your choice (1-5):"+
+    	        "Library Location and Hours Informations\n" +
+        		"Public Library (In city center) --> Available for Monday to Saturday. Weekdays --> 8.00 to 22.00\n" +
+        		"Private Library (Next to the public cultural center )--> Avaliable for 7/24 hours\n" +
+                "Public Library (Inside main campus) --> Available for Monday to Saturday. Weekdays --> 8.00 to 22.00\n" +
+                "1. Catalog Search\n" +
+                "2. Reservation And Renewal\n" +
+                "3. Event And Workshop Schedule\n" +
+                "4. Library Information\n" +
+                "5. Exit\n" +
+                "Enter your choice (1-5):";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void testCatalogSearchMenuInvalid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("abc\n\n48\n\n4\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.catalogSearch();
+        
+        Assert.assertTrue(result);
+        String expectedOutput = "1. Search Books\n" +
+                "2. Search Movies\n" +
+                "3. Search Music\n" +
+                "4. Exit\n" +
+                "Enter your choice (1-4):" +
+                "Invalid choice. Please enter a number.\n" +
+                "1. Search Books\n" +
+                "2. Search Movies\n" +
+                "3. Search Music\n" +
+                "4. Exit\n" +
+                "Enter your choice (1-4):" +
+                "Invalid choice. Please try again.\n" +
+                "1. Search Books\n" +
+                "2. Search Movies\n" +
+                "3. Search Music\n" +
+                "4. Exit\n" +
+                "Enter your choice (1-4):";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void testCatalogSearchMenuValid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("1\ninvalidinput\n\n2\ninvalidinput\n\n3\ninvalidinput\n\n4\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.catalogSearch();
+        Assert.assertTrue(result);
+        String expectedOutput = "1. Search Books\n" +
+                "2. Search Movies\n" +
+                "3. Search Music\n" +
+                "4. Exit\n" +
+                "Enter your choice (1-4):" +
+                "Please write book name you want to search, please pay attention to upper and lower case letters.\n" +
+        	    "(A correct example: Crime and Punishment):\n" +
+        	    "Sorry... The book you are looking for is not available.\n" +
+                "1. Search Books\n" +
+                "2. Search Movies\n" +
+                "3. Search Music\n" +
+                "4. Exit\n" +
+                "Enter your choice (1-4):" +
+                "Please write movie name you want to search, please pay attention to upper and lower case letters.\n" +
+        	    "(A correct example: Into the Wild):\n" +
+        	    "Sorry... The movie you are looking for is not available.\n" +
+                "1. Search Books\n" +
+                "2. Search Movies\n" +
+                "3. Search Music\n" +
+                "4. Exit\n" +
+                "Enter your choice (1-4):" +
+                "Please write music name you want to search, please pay attention to upper and lower case letters.\n" +
+        	    "(A correct example: Castle of Glass):\n" +
+        	    "Sorry... The music you are looking for is not available.\n" +
+                "1. Search Books\n" +
+                "2. Search Movies\n" +
+                "3. Search Music\n" +
+                "4. Exit\n" +
+                "Enter your choice (1-4):";
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void SearchBooksValid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("\nUncle Vanya\n\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.searchBooks();
+        Assert.assertTrue(result);
+        String expectedOutput = "Please write book name you want to search, please pay attention to upper and lower case letters.\n" +
+        	    "(A correct example: Crime and Punishment):\n" +
+        	    "The book Uncle Vanya is available.\n";   
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void SearchMoviesValid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("\nThe Prestige\n\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.searchMovies();
+        Assert.assertTrue(result);
+        String expectedOutput = "Please write movie name you want to search, please pay attention to upper and lower case letters.\n" +
+        	    "(A correct example: Into the Wild):\n" +
+        	    "The movie The Prestige is available.\n";   
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
+    
+    @Test
+    public void SearchMusicValid() throws IOException, InterruptedException{
+    	ByteArrayInputStream inContent = new ByteArrayInputStream("\nOhne Dich\n\n".getBytes());
+        System.setIn(inContent);
+
+        librarysystem = new Librarysystem(System.in, System.out);
+        boolean result = librarysystem.searchMusic();
+        Assert.assertTrue(result);
+        String expectedOutput = "Please write music name you want to search, please pay attention to upper and lower case letters.\n" +
+        	    "(A correct example: Castle of Glass):\n" +
+        	    "The music Ohne Dich is available.\n";   
+        assertEquals(expectedOutput, outContent.toString());
+        System.setIn(null);
+        System.setOut(null);
+    }
