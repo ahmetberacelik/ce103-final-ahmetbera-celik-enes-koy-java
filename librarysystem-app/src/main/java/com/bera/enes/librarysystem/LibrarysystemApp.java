@@ -6,7 +6,7 @@
  * @package com.bera.librarysystem
  * @brief The com.bera.librarysystem package contains the main class and entry point for the Library System application.
  */
-package com.bera.librarysystem;
+package com.bera.enes.librarysystem;
 import java.io.IOException;
 /**
  * @brief Main class for the Library System application.
