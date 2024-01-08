@@ -496,4 +496,198 @@ public class Librarysystem {
 	    take_enter_input();
 	    return false;
 	}
+	/**
+	 * @brief Restore items and clear reservations.
+	 *
+	 * This function allows the user to restore items and clear all reservations. 
+	 * If the user confirms by entering 'Delete', all reservations are removed, 
+	 * and the library's original item lists are restored.
+	 *
+	 * @throws InterruptedException if the thread is interrupted.
+	 * @throws IOException if an I/O error occurs.
+	 * @return true if the restoration is successful, false otherwise.
+	 */
+    public boolean restoreItems() throws InterruptedException, IOException {
+        if (!viewReservation()) {
+        	return false;
+        }
+        else {
+            out.print("If you want to delete your all reservations, write 'Delete'. If you didn't, enter wrong input.\n");
+            String deleteReservations = scanner.next();
+            if (deleteReservations.equals("Delete")) {
+                for (int i = 0; i < reservedItems.length; i++) {
+                	reservedItems[i] = "";
+                }
+                reservedItemCount = 0;
+                for(int j=0; j<5; j++) {
+                	books[j] = originalBooks[j];
+                	movies[j] = originalMovies[j];
+                	musics[j] = originalMusics[j];
+                }
+                out.print("Your reservations has been cleaned.\n");
+                take_enter_input();
+                return true;
+            } else {
+                out.print("You entered wrong input!\n");
+                take_enter_input();
+                return false;
+            }
+        }
+    }
+    /**
+     * @brief View user reservations.
+     *
+     * This function displays the items that the user has reserved.
+     *
+     * @throws InterruptedException if the thread is interrupted.
+     * @throws IOException if an I/O error occurs.
+     * @return true if reservations are found, false otherwise.
+     */
+    public boolean viewReservation() throws InterruptedException, IOException {
+        boolean findReservation = false;
+        clearScreen();
+        for (int i = 0; i < reservedItems.length; i++) {
+            if (reservedItems[i] != null && reservedItems[i].contains(active_user)) {
+                out.print("The item " + reservedItems[i] + ".\n");
+                findReservation = true;
+                take_enter_input();
+            }
+        }
+        
+        if (!findReservation) {
+            out.print("You have no borrowed material.\n");
+            take_enter_input();
+        }
+        take_enter_input();
+        return findReservation;
+    }
+    /**
+     * @brief View and interact with the Events and Workshop schedule.
+     *
+     * This function allows the user to view upcoming events, register for events, 
+     * or exit the Events and Workshop schedule.
+     *
+     * @throws IOException if an I/O error occurs.
+     * @throws InterruptedException if the thread is interrupted.
+     * @return true if the user successfully interacts with the schedule, false otherwise.
+     */
+    public boolean EventAndWorkshopSchedule() throws IOException, InterruptedException{
+	    boolean isRunning = true;
+	    while (isRunning) {
+	        clearScreen();
+	        out.print("1. View Events\n");
+	        out.print("2. Register for Events\n");
+	        out.print("3. Exit\n");
+	        out.print("Enter your choice (1-3):");
+
+	        if (!scanner.hasNextInt()) {
+	            out.print("Invalid choice. Please enter a number.\n");
+	            take_enter_input();
+	            scanner.next();
+	            continue;
+	        }
+
+	        int choice = scanner.nextInt();
+	        switch (choice) {
+	            case 1:
+	            	viewEvents();
+	                break;
+	            case 2:
+	            	if (registerForEvents()) break;
+	            	else continue;
+	            case 3:
+	                isRunning = false;
+	                break;
+	            default:
+	                out.print("Invalid choice. Please try again.\n");
+	                take_enter_input();
+	                break;
+	        }
+	    }
+	    return true;
+	}
+    /**
+     * @brief View upcoming events.
+     *
+     * This function displays information about upcoming events.
+     *
+     * @throws IOException if an I/O error occurs.
+     * @throws InterruptedException if the thread is interrupted.
+     */
+    public void viewEvents() throws IOException, InterruptedException {
+        clearScreen();
+        out.print(events);
+        take_enter_input();
+    }
+    /**
+     * @brief Register for upcoming events.
+     *
+     * This function allows the user to register for upcoming events by entering their name
+     * and selecting the desired event.
+     *
+     * @throws IOException if an I/O error occurs.
+     * @throws InterruptedException if the thread is interrupted.
+     * @return true if the registration is successful, false otherwise.
+     */
+    public boolean registerForEvents() throws IOException, InterruptedException {
+        clearScreen();
+        out.print(events);
+        out.print("Please enter your name:\n");
+        scanner.nextLine();
+        String userName = scanner.nextLine();
+
+        if (!eventUserCheck(userName)) {
+            out.print("You entered an invalid username. Username must consist of letters.\n");
+            take_enter_input();
+            return false;
+        }
+
+        out.print("Please select the event you want to register:\n");
+        String eventNo = scanner.next();
+        if (!eventNoCheck(eventNo)) {
+            out.print("You entered wrong option number. Please try again...\n");
+            take_enter_input();
+            return false;
+        }
+
+        out.print("A reservation has been made for " + userName + " for the event " + eventNo +
+                    ". Simply stating your name at the entrance will be sufficient.\n");
+        take_enter_input();
+        return true;
+    }
+    /**
+     * @brief Check if the entered event number is valid.
+     *
+     * This function checks if the entered event number is valid (1 or 2).
+     *
+     * @param eventNo The entered event number.
+     * @return true if the event number is valid, false otherwise.
+     */
+    public static boolean eventNoCheck(String eventNo) {
+        return eventNo.equals("1") || eventNo.equals("2");
+    }
+    /**
+     * @brief Check if the entered username is valid.
+     *
+     * This function checks if the entered username consists of letters.
+     *
+     * @param userName The entered username.
+     * @return true if the username is valid, false otherwise.
+     */
+    public static boolean eventUserCheck(String userName) {
+        return userName.matches("[A-Za-z ]+");
+    }
+    /**
+     * @brief Display library information.
+     *
+     * This function displays general information about the library.
+     *
+     * @throws IOException if an I/O error occurs.
+     * @throws InterruptedException if the thread is interrupted.
+     */
+    public void libraryInformations() throws IOException, InterruptedException {
+        clearScreen();
+        out.print(lib_infos);
+        take_enter_input();
+    }
 }
