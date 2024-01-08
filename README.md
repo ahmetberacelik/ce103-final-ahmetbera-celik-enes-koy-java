@@ -439,7 +439,7 @@ You can use gitextension to commit your work, check if you get any error than re
 ## Creating a Project
 
 ```bash
-mvn archetype:generate -DgroupId=com.ucoruh.librarysystem -DartifactId=librarysystem-app -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
+mvn archetype:generate -DgroupId=com.bera.enes.librarysystem -DartifactId=librarysystem-app -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
 ```
 
 ### Import Project to Eclipse
@@ -451,7 +451,7 @@ Use import existing maven project option to import project to Eclipse
 Rename App.java to LibrarysystemApp.java and AppTest.java to LibrarysystemAppTest.java and Generate Librarysystem.java and LibrarysystemTest.java
 
 ```java
-package com.ucoruh.librarysystem;
+package com.bera.enes.librarysystem;
 
 import org.slf4j.LoggerFactory;
 
@@ -479,7 +479,7 @@ public class Librarysystem {
 ```
 
 ```java
-package com.ucoruh.librarysystem;
+package com.bera.enes.librarysystem;
 
 import java.io.IOException;
 
@@ -539,7 +539,7 @@ Generate test with add new unit test feature in Eclipse
 /**
  * 
  */
-package com.ucoruh.librarysystem;
+package com.bera.enes.librarysystem;
 
 import static org.junit.Assert.*;
 
@@ -594,7 +594,7 @@ public class LibrarysystemTest {
 ```
 
 ```java
-package com.ucoruh.librarysystem;
+package com.bera.enes.librarysystem;
 
 import static org.junit.Assert.*;
 
@@ -699,7 +699,7 @@ public class LibrarysystemAppTest {
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <!-- The Basics -->
-    <groupId>com.ucoruh.librarysystem</groupId>
+    <groupId>com.bera.enes.librarysystem</groupId>
     <artifactId>librarysystem-app</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -889,7 +889,7 @@ public class LibrarysystemAppTest {
                                 <transformer
                                     implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>
-                                        com.ucoruh.librarysystem.LibrarysystemApp</mainClass>
+                                        com.bera.enes.librarysystem.LibrarysystemApp</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -980,13 +980,13 @@ mvn clean test site package
 You can run application by specify the Main function
 
 ```bash
-java -cp librarysystem-app-1.0-SNAPSHOT.jar com.ucoruh.librarysystem.LibrarysystemApp
+java -cp librarysystem-app-1.0-SNAPSHOT.jar com.bera.enes.librarysystem.LibrarysystemApp
 ```
 
 Output
 
 ```bash
-C:\Users\ugur.coruh\Desktop\eclipse-java-maven-template\librarysystem-app\target>java -cp librarysystem-app-1.0-SNAPSHOT.jar com.ucoruh.librarysystem.LibrarysystemApp
+C:\Users\ugur.coruh\Desktop\eclipse-java-maven-template\librarysystem-app\target>java -cp librarysystem-app-1.0-SNAPSHOT.jar com.bera.enes.librarysystem.LibrarysystemApp
 Hello World!
 ```
 
